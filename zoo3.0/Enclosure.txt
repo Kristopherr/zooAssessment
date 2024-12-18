@@ -1,0 +1,8 @@
+﻿1,Large Outdoor Enclosure,Outdoor
+2,Medium Outdoor Enclosure,Outdoor
+3,Medium Indoor/Outdoor Cage,Indoor/Outdoor
+4,Small Indoor/Outdoor Cage,Indoor/Outdoor
+5,Very Large Outdoor Cage with Water,Outdoor
+6,Medium Indoor Cage,Indoor
+7,Small Indoor Cage,Indoor
+8,Large Indoor/Outdoor Aviary,Indoor/Outdoor
