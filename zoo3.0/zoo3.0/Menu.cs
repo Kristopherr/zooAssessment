@@ -28,10 +28,11 @@ namespace zoo3._0
                 Console.WriteLine("1. Enclosures");
                 Console.WriteLine("2. Cages");
                 Console.WriteLine("3. Keeper Menu");
-                Console.WriteLine("4. Add Animals");
-                Console.WriteLine("5. Delete an Animal");
-                Console.WriteLine("6. View All");
-                Console.WriteLine("7. Exit");
+                Console.WriteLine("4. Add Keeper");
+                Console.WriteLine("5. Add Animals");
+                Console.WriteLine("6. Delete an Animal");
+                Console.WriteLine("7. View All");
+                Console.WriteLine("8. Exit");
                 Console.WriteLine("Please select an option:");
 
                 choice = int.Parse(Console.ReadLine());
@@ -45,24 +46,31 @@ namespace zoo3._0
                         Cages.DisplayAllCages();
                         break;
                     case 3:
+                        DictionaryLink.DisplayDataList();
                         keeperMenu();
                         break;
                     case 4:
+                        Keepers.addKeeper();
+                        break;
+
+                    case 5:
+                        EnclosureManager.displayEnclosureCapacities();
                         Animals.AddAnimalToCage();
                         break;
-                    case 5:
+                    case 6:
                         Animals.RemoveAnimalFromFile();
                         break;
-                    case 6:
+                    case 7:
                         DictionaryLink.DisplayDataList();
                         break;
-                    case 7:
+                    case 8:
+                        Environment.Exit(0);
                         break;
                     default:
                         Console.WriteLine("Invalid choice");
                         break;
                 }
-            } while (choice != 7);
+            } while (choice != 8);
         }
 
         public void keeperMenu()
@@ -72,40 +80,39 @@ namespace zoo3._0
             int choice = 0;
             do
             {
-                Console.WriteLine("1. Add Keeper");
-                Console.WriteLine("2. Assign Keeper");
-                Console.WriteLine("3. View Keepers");
-                Console.WriteLine("4. Delete Keeper");
-                Console.WriteLine("5. Exit");
+                Console.WriteLine("\nKeeper Menu\n");
+                
+                Console.WriteLine("1. Assign Keeper");
+                Console.WriteLine("2. View Keepers");
+                Console.WriteLine("3. Delete Keeper");
+                Console.WriteLine("4. Exit");
                 Console.WriteLine("Please select an option:");
 
                 choice = int.Parse(Console.ReadLine());
 
                 switch (choice)
                 {
+
                     case 1:
-                        Keepers.addKeeper();
-                        break;
-                    case 2:
                         
                         assignKeeper.displayAllKeepers();
                         assignKeeper.assignNewCage();
                         break;
-                    case 3:
+                    case 2:
                         assignKeeper.displayAllKeepers();
                         break;
-                    case 4:
+                    case 3:
                         assignKeeper.displayAllKeepers();
                         assignKeeper.deleteKeeper();
                         break;
-                    case 5:
+                    case 4:
                         displayMenu();
                         break;
                     default:
                         Console.WriteLine("Invalid choice");
                         break;
                 }
-            } while (choice != 5);
+            } while (choice != 4);
         }
 
 

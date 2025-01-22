@@ -19,9 +19,11 @@ namespace zoo3
 
         public AssignKeeper()
         {
-            cages = loadKeepers();  // Initialize cages by loading from file
-            keeperDetails = loadKeeperDetails(); // Initialize keeper details by loading from file
+            cages = loadKeepers();  // Initialise cages by loading from file
+            keeperDetails = loadKeeperDetails(); // Initialise keeper details by loading from file
         }
+
+
 
         // Loads cage data from the file using StreamReader
         private Dictionary<int, List<string>> loadKeepers()
@@ -54,12 +56,14 @@ namespace zoo3
             return cages;
         }
 
+
+
         // Updates the keeper file with the latest data from the cages dictionary
-        private void updateCageFile()
+        private void updateKeeperFile()
         {
             try
             {
-                using (StreamWriter writer = new StreamWriter(KeeperFilePath, false)) // Overwrite the file (false parameter)
+                using (StreamWriter writer = new StreamWriter(KeeperFilePath, false)) // Overwrite the file 
                 {
                     foreach (var cage in cages)
                     {
@@ -81,11 +85,15 @@ namespace zoo3
             }
         }
 
+
+
         // Checks if a keeper exists in the system
         public bool keeperExists(string keeperID)
         {
             return keeperDetails.ContainsKey(keeperID);
         }
+
+
 
         // Displays all the keepers by cage for the user to see
         public void displayAllKeepers()
@@ -112,6 +120,7 @@ namespace zoo3
             }
         }
 
+
         // Assigns a new keeper to a cage and optionally removes them from the current cage
         public void assignNewCage()
         {
@@ -124,20 +133,53 @@ namespace zoo3
                 return;
             }
 
+            int assignedCageCount = cages.Values.Count(cageList => cageList.Contains(keeperID));
+
+            if (assignedCageCount >= 4)
+            {
+                Console.WriteLine("This keeper is already assigned to the maximum of 4 cages.");
+                return;  // Prevent further assignment
+            }
+
             Console.WriteLine("Enter the cage ID to assign the keeper to:");
             if (int.TryParse(Console.ReadLine(), out int newCageId))
             {
-                Console.WriteLine("Do you want to remove the keeper from their current cage? (yes/no):");
-                string response = Console.ReadLine().ToLower();
-                bool removeFromCurrent = response == "yes";
+                Console.WriteLine("Do you want to remove the keeper from a specific cage? (yes/no):");
+                string specificCageResponse = Console.ReadLine().ToLower();
 
-                assignKeeperToCage(keeperID, newCageId, removeFromCurrent);
+                if (specificCageResponse == "yes")
+                {
+                    Console.WriteLine("Enter the cage ID to remove the keeper from:");
+                    if (int.TryParse(Console.ReadLine(), out int cageID))
+                    {
+                        // Ensure keeper is assigned to this cage
+                        if (cages.ContainsKey(cageID) && cages[cageID].Contains(keeperID))
+                        {
+                            removeKeeperFromCage(keeperID); // Remove the keeper from the specified cage
+                        }
+                        else
+                        {
+                            Console.WriteLine($"Keeper {keeperID} is not assigned to cage {cageID}.");
+                            return; // Exit method if keeper is not assigned to the cage
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid cage ID.");
+                        return; // Exit method if cage ID is invalid
+                    }
+                }
+
+                // Proceed to assign the keeper to the new cage
+                assignKeeperToNewCage(keeperID, newCageId);
             }
             else
             {
                 Console.WriteLine("Invalid cage ID. Please enter a numeric value.");
             }
         }
+
+
 
         // Assigns a keeper to a cage, removing from the current cage if needed
         public void assignKeeperToCage(string keeperID, int newCageId, bool removeFromCurrent = false)
@@ -148,7 +190,7 @@ namespace zoo3
             }
 
             assignKeeperToNewCage(keeperID, newCageId); // Assign keeper to the new cage
-            updateCageFile(); // Update the file to reflect changes
+            updateKeeperFile(); // Update the file to reflect changes
         }
 
         // Removes a keeper from any cage they are currently assigned to
@@ -177,7 +219,8 @@ namespace zoo3
             Console.WriteLine($"Keeper {keeperID} assigned to cage ID {newCageId}.");
         }
 
-        // Allows user to delete a keeper, with options to remove from cage or delete from system
+
+        // delete a keeper, with options to remove from cage or delete from system
         public void deleteKeeper()
         {
             Console.WriteLine("Enter the keeper's ID to delete:");
@@ -189,40 +232,73 @@ namespace zoo3
                 return;
             }
 
-            // Ask if the user wants to remove the keeper from a specific cage
-            Console.WriteLine("Do you want to remove the keeper from a specific cage? (yes/no):");
-            string response = Console.ReadLine().ToLower();
+            // Count the number of cages the keeper is assigned to
+            int assignedCageCount = cages.Values.Count(cageList => cageList.Contains(keeperID));
 
-            if (response == "yes")
+            if (assignedCageCount == 0)
+            {
+                Console.WriteLine($"Keeper {keeperID} is not assigned to any cage.");
+            }
+            else
+            {
+                Console.WriteLine($"Keeper {keeperID} is assigned to {assignedCageCount} cage(s).");
+            }
+
+            // prompt to remove the keeper from a specific cage or not
+            Console.WriteLine("Do you want to remove the keeper from a specific cage? (yes/no):");
+            string specificCageRemove = Console.ReadLine().ToLower();
+
+            if (specificCageRemove == "yes")
             {
                 Console.WriteLine("Enter the cage ID to remove the keeper from:");
                 if (int.TryParse(Console.ReadLine(), out int cageID))
                 {
-                    removeKeeperFromCage(keeperID); // Remove the keeper from the specified cage
+                    if (cages.ContainsKey(cageID) && cages[cageID].Contains(keeperID))
+                    {
+                        cages[cageID].Remove(keeperID);
+                        Console.WriteLine($"Keeper {keeperID} has been removed from cage {cageID}.");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Keeper {keeperID} is not assigned to cage {cageID}.");
+                    }
                 }
                 else
                 {
                     Console.WriteLine("Invalid cage ID.");
-                    return; // Exit the method if the cage ID is invalid
+                    return;
                 }
             }
 
-            // Ask if the user wants to delete the keeper from the system entirely
-            Console.WriteLine("Do you want to delete the keeper from the system completely? (yes/no):");
-            response = Console.ReadLine().ToLower();
+            // Check if keeper has any remaining cage assignments and include to the count if they are
+            assignedCageCount = cages.Values.Count(cageList => cageList.Contains(keeperID));
 
-            if (response == "yes")
+            if (assignedCageCount == 0)
             {
-                // Delete the keeper from the keeperDetails dictionary
-                if (keeperDetails.ContainsKey(keeperID))
+                // delete the keeper from the system entirely if agree'd
+                Console.WriteLine("Keeper is no longer assigned to any cages. Do you want to delete the keeper from the system completely? (yes/no):");
+                string keeperDel = Console.ReadLine().ToLower();
+
+                if (keeperDel == "yes")
                 {
-                    keeperDetails.Remove(keeperID);
-                    Console.WriteLine($"Keeper {keeperID} has been deleted from the system.");
+                    if (keeperDetails.ContainsKey(keeperID))
+                    {
+                        keeperDetails.Remove(keeperID);
+                        Console.WriteLine($"Keeper {keeperID} has been deleted from the system.");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Keeper {keeperID} does not exist in the system details.");
+                    }
                 }
+            }
+            else
+            {
+                Console.WriteLine($"Keeper {keeperID} is still assigned to {assignedCageCount} cage(s). No further actions taken.");
             }
 
             // Update the file to reflect the changes
-            updateCageFile();
+            updateKeeperFile();
         }
 
         // Loads keeper details from the file

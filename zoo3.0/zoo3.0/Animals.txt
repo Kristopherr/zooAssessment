@@ -1,0 +1,12 @@
+51,C0001,Crockpot Crocodoodle,100,Crocodiles,male,Crocodiles
+51,J0002,Just Steve,56,Crocodiles,male,Crocodiles
+81,BO0001,Owly Owski,3,Owls - Flying,female,Owls - Flying
+81,BJ0001,Jet Li,71,Owls - Flying,male,Owls - Flying
+31,MJ0001, jarjar binks, 4, Ape, male
+21,MH0003, horse man, 4, Horse, male
+21,MN0005, nota horse, 2, Horse, female
+21,MN0001, nota donkey, 5, Horse, male
+21,MI0002, isa horse, 1, Donkey, female
+51,B0001,big Frazer,100,Crocodile,male,Crocodile
+51,W0002,wee garry,1,Crocodile,female,Crocodile
+51,R0003,real croc,4,Crocodile,male,Crocodile

@@ -11,7 +11,9 @@ namespace zoo3
     {
 
 
-
+        /// <summary>
+        /// reads the cage file and displays the cages as well as keepers
+        /// </summary>
         public Cages()
         {
 
@@ -19,7 +21,7 @@ namespace zoo3
 
         public static void DisplayAllCages()
         {
-            string filePath = "C:\\Users\\kris-\\source\\repos\\zoo3.0\\zoo3.0\\Cage.txt";
+            string filePath = "C:\\Users\\20024538\\source\\repos\\zoo3.0\\zoo3.0\\Cage.txt";
 
             if (!File.Exists(filePath))
             {
@@ -42,7 +44,7 @@ namespace zoo3
 
         public static void displayAllKeepers()
         {
-            string filePath = "C:\\Users\\kris-\\source\\repos\\zoo3.0\\zoo3.0\\Keepers.txt";
+            string filePath = "C:\\Users\\20024538\\source\\repos\\zoo3.0\\zoo3.0\\Keepers.txt";
 
             if (!File.Exists(filePath))
             {

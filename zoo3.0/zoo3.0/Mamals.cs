@@ -46,13 +46,13 @@ namespace zoo3
         {
             List<string> options = new List<string>
             {
-                "Apes",
-                "Marmoset monkeys",
-                "Tigers",
-                "Rabbits",
-                "Guinea pigs",
-                "Horses",
-                "Donkeys",
+                "Ape",
+                "Marmoset monkey",
+                "Tiger",
+                "Rabbit",
+                "Guinea pig",
+                "Horse",
+                "Donkey",
                 "Zebra"
             };
 
@@ -89,7 +89,7 @@ namespace zoo3
             Mamals selectedAnimal = new Mamals(name, age, options[choice], gender, animalType);
 
             //Check if the selected animal can fit in the chosen cage
-            bool canFitInCage = EnclosureManager.CanAddAnimalToCage(selectedAnimal, cageId);
+            bool canFitInCage = EnclosureManager.canAddAnimalToCage(selectedAnimal, cageId);
 
             if (canFitInCage)
             {

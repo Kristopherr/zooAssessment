@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using zoo3._0;
 
 namespace GlasgowZoo
 {
@@ -57,7 +58,11 @@ namespace GlasgowZoo
             string keeperName = Console.ReadLine();
 
             Console.Write("Enter the age of the keeper: ");
-            int keeperAge = int.Parse(Console.ReadLine());
+            int keeperAge;
+            while (!int.TryParse(Console.ReadLine(), out keeperAge) || keeperAge <= 0)//checks age is greater than 0
+            {
+                Console.WriteLine("Invalid age. Please enter a positive number:");
+            }
 
             Console.Write("Enter the specialty of the keeper: ");
             string keeperSpecialty = Console.ReadLine();
@@ -65,11 +70,19 @@ namespace GlasgowZoo
             Console.WriteLine("Enter the ID of the cage to assign this keeper to: ");
             int assignedCageID = promptForCageId();
 
-            Keepers keeper = new Keepers(keeperName, keeperAge, keeperSpecialty, assignedCageID);
+            
+            //Keepers keeper = new Keepers(keeperName, keeperAge, keeperSpecialty, assignedCageID);
 
-            Console.Write($"This keepers ID is {keeper.KEEPERID}\n");
-            writeToFile(keeper);
-
+            if (EnclosureManager.CanAddKeeperToCage(assignedCageID))
+            {
+                Keepers keeper = new Keepers(keeperName, keeperAge, keeperSpecialty, assignedCageID);
+                writeToFile(keeper);
+                Console.WriteLine($"Keeper {keeper.KEEPERNAME} successfully assigned to cage {assignedCageID}.");
+            }
+            else
+            {
+                Console.WriteLine($"Keeper {keeperName} could not be assigned to cage {assignedCageID}.");
+            }
         }
         private static int promptForCageId()
         {
@@ -83,21 +96,21 @@ namespace GlasgowZoo
                 cages[cageId] = cageName;
             }
 
+            Console.WriteLine("Available cages:");
             foreach (var cage in cages)
             {
                 Console.WriteLine($"Cage ID: {cage.Key}, Cage Name: {cage.Value}");
             }
 
-            Console.Write("Enter the Cage ID: ");
-            int selectedCageId = int.Parse(Console.ReadLine());
-
-            if (!cages.ContainsKey(selectedCageId))
+            while (true)
             {
+                Console.Write("Enter the Cage ID: ");
+                if (int.TryParse(Console.ReadLine(), out int selectedCageId) && cages.ContainsKey(selectedCageId))
+                {
+                    return selectedCageId;
+                }
                 Console.WriteLine("Invalid Cage ID. Please try again.");
-                return promptForCageId();
             }
-
-            return selectedCageId;
         }
         private static void writeToFile(Keepers keeper)
         {

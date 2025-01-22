@@ -64,7 +64,7 @@ namespace zoo3
 
         public static void RemoveAnimalFromFile()
         {
-            string filePath = "C:\\Users\\kris-\\source\\repos\\zoo3.0\\zoo3.0\\Animals.txt";
+            string filePath = "C:\\Users\\20024538\\source\\repos\\zoo3.0\\zoo3.0\\Animals.txt";
 
             // Display the file's contents to the user
             if (!File.Exists(filePath))

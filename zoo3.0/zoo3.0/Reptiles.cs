@@ -47,10 +47,10 @@ namespace zoo3
         {
             List<string> options = new List<string>
             {
-                "Crocodiles",
-                "Snakes",
-                "Bearded Dragons",
-                "Lizards"
+                "Crocodile",
+                "Snake",
+                "Bearded Dragon",
+                "Lizard"
             };
 
           
@@ -86,7 +86,7 @@ namespace zoo3
             Reptiles selectedAnimal = new Reptiles(name, age, options[choice], gender, animalType);
 
             
-            bool canFitInCage = EnclosureManager.CanAddAnimalToCage(selectedAnimal, cageId);
+            bool canFitInCage = EnclosureManager.canAddAnimalToCage(selectedAnimal, cageId);
 
             if (canFitInCage)
             {
@@ -103,7 +103,7 @@ namespace zoo3
         private static int PromptForCageId()
         {
             var cages = new Dictionary<int, string>();
-            foreach (var line in File.ReadLines("C:\\Users\\kris-\\source\\repos\\zoo3.0\\zoo3.0\\Cage.txt"))
+            foreach (var line in File.ReadLines("C:\\Users\\20024538\\source\\repos\\zoo3.0\\zoo3.0\\Cage.txt"))
             {
                 var parts = line.Split(',');
                 int cageId = int.Parse(parts[1].Trim());
@@ -131,7 +131,7 @@ namespace zoo3
         
         private static void WriteToFile(Reptiles animal, int cageId)
         {
-            string filePath = "C:\\Users\\kris-\\source\\repos\\zoo3.0\\zoo3.0\\Animals.txt";
+            string filePath = "C:\\Users\\20024538\\source\\repos\\zoo3.0\\zoo3.0\\Cage.txt";
             using (StreamWriter writer = new StreamWriter(filePath, true))
             {
                 

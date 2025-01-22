@@ -29,7 +29,7 @@ namespace zoo3
             /// this method will read the files and link the data together using dictionaries
 
             var enclosures = new Dictionary<int, string>();
-            foreach (var line in File.ReadLines("C:\\Users\\kris-\\source\\repos\\zoo3.0\\zoo3.0\\Enclosure.txt"))
+            foreach (var line in File.ReadLines("C:\\Users\\20024538\\source\\repos\\zoo3.0\\zoo3.0\\Enclosure.txt"))
             {
                 var parts = line.Split(','); // splits the file into 2 sections via the comma
                 int enclosureId = int.Parse(parts[0].Trim()); // Assigns the number as enclosureID
@@ -37,9 +37,9 @@ namespace zoo3
                 enclosures[enclosureId] = enclosureName;
             }
 
-            //Step 2: Read the cages file
+            //Read the cages file
             var cages = new Dictionary<int, List<(int cageId, string cageName)>>(); // first int is enclosureId, then returns a tuple for cage name and id
-            foreach (var line in File.ReadLines("C:\\Users\\kris-\\source\\repos\\zoo3.0\\zoo3.0\\Cage.txt"))
+            foreach (var line in File.ReadLines("C:\\Users\\20024538\\source\\repos\\zoo3.0\\zoo3.0\\Cage.txt"))
             {
                 var parts = line.Split(",");
                 int enclosureId = int.Parse(parts[0].Trim());
@@ -55,7 +55,7 @@ namespace zoo3
 
             //Read the animals file
             var animals = new Dictionary<int, List<string>>();
-            foreach (var line in File.ReadLines("C:\\Users\\kris-\\source\\repos\\zoo3.0\\zoo3.0\\Animals.txt"))
+            foreach (var line in File.ReadLines("C:\\Users\\20024538\\source\\repos\\zoo3.0\\zoo3.0\\Animals.txt"))
             {
                 var parts = line.Split(",");
                 int cageId = int.Parse(parts[0].Trim());
@@ -71,13 +71,13 @@ namespace zoo3
                 }
 
                 // Format the animal information
-                animals[cageId].Add($"{animalID},{animalName},{animalAge},{animalOptions},{animalGender}");
+                animals[cageId].Add($"\n \t {animalID},{animalName},{animalAge},{animalOptions},{animalGender}") ;
             }
         
 
             //Creating a data list for keepers
             var keepers = new Dictionary<int, List<string>>();
-            foreach (var line in File.ReadLines("C:\\Users\\kris-\\source\\repos\\zoo3.0\\zoo3.0\\Keepers.txt"))
+            foreach (var line in File.ReadLines("C:\\Users\\20024538\\source\\repos\\zoo3.0\\zoo3.0\\Keepers.txt"))
             {
                 var parts = line.Split(','); //this splits the file into 5 sections via the comma cageid, keeperid, name, age and specialty
                 int cageId = int.Parse(parts[0].Trim());
